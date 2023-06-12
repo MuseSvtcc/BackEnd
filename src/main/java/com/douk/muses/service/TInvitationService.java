@@ -3,8 +3,6 @@ package com.douk.muses.service;
 import com.douk.muses.pojo.TInvitation;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.douk.muses.pojo.or.UserInvitation;
-import com.douk.utils.result.Result;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -36,14 +34,9 @@ public interface TInvitationService extends IService<TInvitation> {
      * @param userId
      * @return
      */
-    Map<String, Object> invitationContestById(Integer userId, Integer invitation);
+    Map<String, Object> getContent(Integer userId, Integer invitation);
 
-
-
-    Map<String, Object> invitationContest(Integer invitationId);
+    Map<String, Object> insertUserInvitation(String i, Integer invitation);
 
     int insertByUid(Integer userId, Map<String, String> map);
-
-    Result post(MultipartFile header);
-
 }
