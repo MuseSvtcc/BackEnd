@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douk.muses.mapper.TAttentionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.douk.muses.pojo.TAttention">
+        <id column="id" property="id" />
+        <result column="attention_id" property="attentionId" />
+        <result column="u_id" property="uId" />
+        <result column="is_attention" property="isAttention" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, attention_id, u_id, is_attention
+    </sql>
+
+</mapper>

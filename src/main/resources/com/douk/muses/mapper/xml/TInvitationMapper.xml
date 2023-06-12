@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douk.muses.mapper.TInvitationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.douk.muses.pojo.TInvitation">
+        <id column="invitation_id" property="invitationId" />
+        <result column="u_id" property="uId" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="attachment" property="attachment" />
+        <result column="good" property="good" />
+        <result column="no_good" property="noGood" />
+        <result column="collect" property="collect" />
+        <result column="transmit" property="transmit" />
+        <result column="price" property="price" />
+        <result column="partitions" property="partitions" />
+        <result column="u_top" property="uTop" />
+        <result column="u_private" property="uPrivate" />
+        <result column="tag" property="tag" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_st" property="updatedSt" />
+        <result column="deleted" property="deleted" />
+        <result column="look" property="look" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        invitation_id, u_id, title, content, attachment, good, no_good, collect, transmit, price, partitions, u_top, u_private, tag, created_at, updated_st, deleted, look
+    </sql>
+
+    <select id="getUserInvitationList" resultType="com.douk.muses.pojo.or.UserInvitation">
+        select u.u_id,u.nick_name,u.portrait,u.attention_count,i.title,i.content,i.i_or_m,i.good,i.no_good,i.created_at,i.look
+        from t_user u
+        INNER JOIN t_invitation i on u.u_id = i.u_id
+        ORDER BY invitation_id desc
+        limit #{x},#{y}
+    </select>
+    <select id="getHotUserInvitation" resultType="com.douk.muses.pojo.or.UserInvitation">
+        select u.u_id,u.nick_name,u.portrait,u.attention_count,i.title,i.content,i.i_or_m,i.good,i.no_good,i.created_at,i.look
+        from t_user u
+        INNER JOIN t_invitation i on u.u_id = i.u_id
+        where i.created_at > #{date}
+        ORDER BY i.good desc
+        limit #{x},#{y}
+    </select>
+    <select id="getContent" resultType="java.util.Map">
+        select i.u_id,u.nick_name,u.portrait,i.title,i.content,i.price,i.look,i.created_at,ui.is_attention,ui.is_good,ui.is_no_good,ui.is_collect,ui.is_buy
+        from t_user u
+        LEFT JOIN t_invitation i on u.u_id=i.u_id
+        LEFT JOIN t_user_invitation ui on ui.invitation_id=i.invitation_id
+        where i.invitation_id=#{invitation} and ui.u_id = #{userId}
+    </select>
+    <select id="insertUserInvitation" resultType="java.util.Map">
+        select i.u_id,u.nick_name,u.portrait,i.title,i.content,i.price,COALESCE(0,ui.is_attention),COALESCE(0,ui.is_good),COALESCE(0,ui.is_no_good),COALESCE(0,ui.is_collect),COALESCE(0,ui.is_buy)
+        from t_user u
+        LEFT JOIN t_invitation i on u.u_id=i.u_id
+        LEFT JOIN t_user_invitation ui on ui.invitation_id=i.invitation_id
+        where i.invitation_id=#{invitation}
+    </select>
+
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douk.muses.mapper.TUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.douk.muses.pojo.TUser">
+        <id column="u_id" property="uId" />
+        <result column="user_name" property="userName" />
+        <result column="pass_word" property="passWord" />
+        <result column="nick_name" property="nickName" />
+        <result column="email" property="email" />
+        <result column="portrait" property="portrait" />
+        <result column="describe_text" property="describeText" />
+        <result column="sex" property="sex" />
+        <result column="vip" property="vip" />
+        <result column="history" property="history" />
+        <result column="gold_count" property="goldCount" />
+        <result column="offline_time" property="offlineTime" />
+        <result column="favorite" property="favorite" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="deleted" property="deleted" />
+        <result column="phone" property="phone" />
+        <result column="hobby" property="hobby" />
+        <result column="attention_count" property="attentionCount" />
+
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        u_id, user_name, pass_word, nick_name, email, portrait, describe_text, sex, vip, history, gold_count, offline_time, favorite, created_at, updated_at, deleted, phone,hobby,attention_count
+    </sql>
+    <update id="setAttentionCountAdd">
+        update t_user
+        SET attention_count=attention_count+1
+        WHERE u_id = #{uId};
+    </update>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douk.muses.mapper.TGoldMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.douk.muses.pojo.TGold">
+        <id column="gold_id" property="goldId" />
+        <result column="u_id" property="uId" />
+        <result column="jurisdiction" property="jurisdiction" />
+        <result column="operation" property="operation" />
+        <result column="count" property="count" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        gold_id, u_id, jurisdiction, operation, count, created_at, updated_at, deleted
+    </sql>
+
+</mapper>

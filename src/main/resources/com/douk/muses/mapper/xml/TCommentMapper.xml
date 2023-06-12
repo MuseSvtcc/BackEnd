@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douk.muses.mapper.TCommentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.douk.muses.pojo.TComment">
+        <id column="comments_id" property="commentsId" />
+        <result column="invitation_id" property="invitationId" />
+        <result column="u_id" property="uId" />
+        <result column="father_id" property="fatherId" />
+        <result column="comment_text" property="commentText" />
+        <result column="good" property="good" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="delectd" property="delectd" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        comments_id, invitation_id, u_id, father_id, comment_text, good, created_at, updated_at, delectd
+    </sql>
+    <select id="getCommentList" resultType="com.douk.muses.pojo.or.InvitationComment">
+        select c.comments_id,c.u_id,u.nick_name,u.portrait,c.comment_text,c.good
+        from t_comment c
+        LEFT JOIN t_user u on u.u_id=c.u_id
+        where c.invitation_id=#{iId} and c.father_id=0
+        limit ${number},${size}
+    </select>
+    <select id="getCommentSonList" resultType="com.douk.muses.pojo.or.InvitationComment">
+        select c.comments_id,c.u_id,u.nick_name,u.portrait,c.comment_text,c.good
+        from t_comment c
+        LEFT JOIN t_user u on u.u_id=c.u_id
+        where c.father_id=#{commentsId}
+        limit ${number},${size}
+    </select>
+    <select id="getIsGood" resultType="java.lang.Integer">
+        select *
+        from t_comment
+        where comments_id=${commentsId} and good_uid like CONCAT('%/',${userId},'/%');
+    </select>
+
+</mapper>
