@@ -6,12 +6,15 @@ import com.douk.muses.mapper.TInvitationMapper;
 import com.douk.muses.pojo.or.UserInvitation;
 import com.douk.muses.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import com.douk.utils.md5.MD5Utils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * <p>
@@ -24,7 +27,8 @@ import java.util.Map;
 @Service
 public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvitation> implements TInvitationService {
     Date s=new Date();
-
+    @Value("${files.upload.path}")
+    private String basePath;
     @Override
     public List<TInvitation> getIIT(int i) {
         LambdaQueryWrapper<TInvitation> wrapper=new LambdaQueryWrapper<>();
@@ -67,7 +71,7 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
     }
 
     @Override
-    public int insertByUid(Integer userId, Map<String, String> map) {
+    public int insertByUid(Integer userId, Map<String, String> map, MultipartFile header) {
         TInvitation invitation=new TInvitation();
         invitation.setUId(userId);
         invitation.setTitle(map.get("title"));//标题
@@ -77,7 +81,24 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
         invitation.setContent(map.get("private"));//私有
         invitation.setContent(map.get("tag"));//标签
         invitation.setIOrM(map.get("iorm"));//图片或视频链接
+        //判空
+        if(!header.isEmpty()){
+            //getOriginalFilename上传文件的文件名 有后缀
+            String originalFilename = header.getOriginalFilename();
+            String substring = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+
+            String md5 = MD5Utils.getMd5(header);
+            File file=new File(basePath+md5+"."+substring);
+            invitation.setAttachment(String.valueOf(file));
+            try {
+                header.transferTo(file);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
         return baseMapper.insert(invitation);
     }
+
 }

@@ -38,9 +38,6 @@ public class HomePageController {
     @Autowired
     private TInvitationService invitationService;
 
-    @Autowired
-    private TCommentService commentService;
-
     /**
      * 首页推荐
      * 未登录最新的15条
@@ -134,31 +131,6 @@ public class HomePageController {
     }
 
     /**
-     *评论区
-     * @param map
-     * @return
-     */
-    @PostMapping("/comment")
-    public Result comment(HttpServletRequest request,@RequestBody Map<String,String> map){
-        String iId=map.get("iId");
-        String fnumber = map.get("fnumber");
-        String fsize = map.get("fsize");
-        String znumber = map.get("znumber");
-        String zsize = map.get("zsize");
-        String token = request.getHeader("Authorization");
-        List<InvitationComment> list=new ArrayList<>();
-        if(token==null||token.equals("")) {
-            list = commentService.getCommentList(null,iId,fnumber, fsize,znumber,zsize);
-
-        }else {
-            Map<String, Object> map1 = JWTUtils.checkToken(token);
-            Integer userId = (Integer) map1.get("userId");
-            list = commentService.getCommentList(userId,iId,fnumber, fsize,znumber,zsize);
-        }
-        return Result.ok(list);
-    }
-
-    /**
      * 关注
      * @param request
      * @param id
@@ -172,5 +144,6 @@ public class HomePageController {
         int i=attentionService.insertAttention(userId,id);
         return Result.ok(i);
     }
+
 
 }

@@ -31,8 +31,14 @@ spring:
             smtp:
               ssl:
                 enable: true    #开启加密验证
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
 
-# mybatisPlus
+files:
+  upload:
+    path: D:\
 mybatis-plus:
   mapper-locations: classpath*:com/douk/muses/mapper/xml/*.xml
   global-config:

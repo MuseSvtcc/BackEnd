@@ -5,11 +5,11 @@ import com.douk.utils.JWT.JWTUtils;
 import com.douk.utils.result.Result;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -25,12 +25,14 @@ public class IssueController {
      * @return
      */
     @PostMapping("/user")
-    public Result Issue(HttpServletRequest request,@RequestBody Map<String,String> map){
+    public Result Issue(//@ 封装上传数据
+                        @RequestParam("header") MultipartFile header,
+                        HttpServletRequest request,@RequestBody Map<String,String> map){
         String token = request.getHeader("Authorization");
         Integer userId = (Integer) JWTUtils.checkToken(token).get("userId");
-        int i=invitationService.insertByUid(userId,map);
-
+        int i=invitationService.insertByUid(userId,map,header);
 
         return Result.ok(i);
     }
+
 }

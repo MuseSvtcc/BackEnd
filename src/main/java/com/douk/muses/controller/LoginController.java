@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/user")
 public class LoginController {
+    private Map<String,Object> m=new HashMap<>();
     @Autowired
     private TUserService userService;
 
@@ -53,7 +55,14 @@ public class LoginController {
             String token = JWTUtils.createToken(Long.valueOf(user.getUId()));
             //7天
             redisTemplate.opsForValue().set("TOKEN_"+token, JSON.toJSONString(user),7, TimeUnit.DAYS);
-            return Result.ok(token);
+            user.setPassWord(null);
+            user.setDeleted(null);
+            user.setUpdatedAt(null);
+            user.setUId(null);
+            user.setHobby(null);
+            m.put("user",user);
+            m.put("token",token);
+            return Result.ok(m);
         }
         return Result.build("登陆失败", ResultCodeEnum.LOGIN_ERROR);
     }
@@ -111,7 +120,14 @@ public class LoginController {
             String token = JWTUtils.createToken(Long.valueOf(user.getUId()));
             //7天
             redisTemplate.opsForValue().set("TOKEN_"+token, JSON.toJSONString(user),7, TimeUnit.DAYS);
-            return Result.ok(token);
+            user.setPassWord(null);
+            user.setDeleted(null);
+            user.setUpdatedAt(null);
+            user.setUId(null);
+            user.setHobby(null);
+            m.put("user",user);
+            m.put("token",token);
+            return Result.ok(m);
         }else {
             return Result.fail("验证码错误");
         }
