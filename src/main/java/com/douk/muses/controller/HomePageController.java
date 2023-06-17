@@ -115,13 +115,14 @@ public class HomePageController {
         String token = request.getHeader("Authorization");
         Map <String,Object> map=new HashMap<>();
         if(token==null||token.equals("")){
-            map=invitationService.insertUserInvitation("0",invitation);
+            map=invitationService.invitationContest(invitation);
 
             return Result.ok(map);
         }else {
             Map<String, Object> map1 = JWTUtils.checkToken(token);
             Integer userId = (Integer) map1.get("userId");
-            map=invitationService.getContent(userId,invitation);
+            System.out.println("账号为："+userId);
+            map=invitationService.invitationContestById(userId,invitation);
             return Result.ok(map);
         }
     }

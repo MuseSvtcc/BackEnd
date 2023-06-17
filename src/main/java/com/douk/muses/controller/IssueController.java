@@ -30,9 +30,9 @@ public class IssueController {
                         HttpServletRequest request,@RequestBody Map<String,String> map){
         String token = request.getHeader("Authorization");
         Integer userId = (Integer) JWTUtils.checkToken(token).get("userId");
-        int i=invitationService.insertByUid(userId,map,header);
+//        int i=invitationService.insertByUid(userId,map,header);
 
-        return Result.ok(i);
+        return Result.ok(0);
     }
 
 }
