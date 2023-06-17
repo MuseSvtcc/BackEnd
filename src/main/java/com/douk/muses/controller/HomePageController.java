@@ -1,12 +1,8 @@
 package com.douk.muses.controller;
 
 import com.douk.muses.pojo.TAttention;
-import com.douk.muses.pojo.TInvitation;
-import com.douk.muses.pojo.or.InvitationComment;
-import com.douk.muses.pojo.or.InvitationContent;
 import com.douk.muses.pojo.or.UserInvitation;
 import com.douk.muses.service.TAttentionService;
-import com.douk.muses.service.TCommentService;
 import com.douk.muses.service.TInvitationService;
 import com.douk.utils.JWT.JWTUtils;
 import com.douk.utils.result.Result;
@@ -14,8 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,6 +116,7 @@ public class HomePageController {
         Map <String,Object> map=new HashMap<>();
         if(token==null||token.equals("")){
             map=invitationService.insertUserInvitation("0",invitation);
+
             return Result.ok(map);
         }else {
             Map<String, Object> map1 = JWTUtils.checkToken(token);
