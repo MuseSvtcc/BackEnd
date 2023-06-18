@@ -30,6 +30,7 @@
         invitation_id, u_id, title, content, attachment, good, no_good, collect, transmit, price, partitions, u_top, u_private, tag, created_at, updated_st, deleted, look
     </sql>
 
+
     <select id="getUserInvitationList" resultType="com.douk.muses.pojo.or.UserInvitation">
         select u.u_id,u.nick_name,u.portrait,u.attention_count,i.title,i.content,i.i_or_m,i.good,i.no_good,i.created_at,i.look
         from t_user u
@@ -45,18 +46,17 @@
         ORDER BY i.good desc
         limit #{x},#{y}
     </select>
-    <select id="getContent" resultType="java.util.Map">
-        select i.u_id,u.nick_name,u.portrait,i.title,i.content,i.price,i.look,i.created_at,ui.is_attention,ui.is_good,ui.is_no_good,ui.is_collect,ui.is_buy
-        from t_user u
-        LEFT JOIN t_invitation i on u.u_id=i.u_id
-        LEFT JOIN t_user_invitation ui on ui.invitation_id=i.invitation_id
-        where i.invitation_id=#{invitation} and ui.u_id = #{userId}
+    <select id="relation" resultType="java.util.Map">
+        select ui.is_attention isAttention,ui.is_good isGood,ui.is_no_good isNoGood,ui.is_collect isCollect,ui.is_buy isBuy
+        from  t_user_invitation ui
+        where ui.invitation_id=#{invitation} and ui.u_id = #{userId}
     </select>
-    <select id="insertUserInvitation" resultType="java.util.Map">
-        select i.u_id,u.nick_name,u.portrait,i.title,i.content,i.price,COALESCE(0,ui.is_attention),COALESCE(0,ui.is_good),COALESCE(0,ui.is_no_good),COALESCE(0,ui.is_collect),COALESCE(0,ui.is_buy)
+
+    <select id="invitationContest" resultType="java.util.Map">
+        select i.u_id,u.nick_name,u.portrait,
+               i.title,i.content,i.price,i.look,i.created_at,i.i_or_m,i.good,i.no_good,i.collect,i.transmit,i.price,i.tag
         from t_user u
         LEFT JOIN t_invitation i on u.u_id=i.u_id
-        LEFT JOIN t_user_invitation ui on ui.invitation_id=i.invitation_id
         where i.invitation_id=#{invitation}
     </select>
 

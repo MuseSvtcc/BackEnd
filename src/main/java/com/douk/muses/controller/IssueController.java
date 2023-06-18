@@ -25,14 +25,15 @@ public class IssueController {
      * @return
      */
     @PostMapping("/user")
-    public Result Issue(//@ 封装上传数据
-                        @RequestParam("header") MultipartFile header,
-                        HttpServletRequest request,@RequestBody Map<String,String> map){
+    public Result Issue(HttpServletRequest request,@RequestBody Map<String,String> map){
         String token = request.getHeader("Authorization");
         Integer userId = (Integer) JWTUtils.checkToken(token).get("userId");
-        int i=invitationService.insertByUid(userId,map,header);
-
+        int i=invitationService.insertByUid(userId,map);
         return Result.ok(i);
+    }
+    @PostMapping("/user/file")
+    public Result IssueFile(@RequestParam("header")MultipartFile header){
+        return invitationService.post(header);
     }
 
 }

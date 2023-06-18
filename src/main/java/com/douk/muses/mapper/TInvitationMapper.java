@@ -17,16 +17,16 @@ import java.util.Map;
  * @author douk
  * @since 2023-06-02
  */
+@SuppressWarnings("ALL")
 public interface TInvitationMapper extends BaseMapper<TInvitation> {
 
     List<UserInvitation> getUserInvitationList(@Param("x")int x,@Param("y")int y);
 
     List<UserInvitation> getHotUserInvitation(@Param("date") Date date,@Param("x") int x,@Param("y") int y);
 
+    Map<String, Object> relation(@Param("userId") Integer userId,@Param("invitation") Integer invitation);
 
+    Map<String, Object> insertUserInvitation(Integer valueOf, Integer invitationId);
 
-    Map<String, Object> getContent(Integer userId, Integer invitation);
-    Map<String, Object> insertUserInvitation(Integer userId, Integer invitation);
-
-
+    Map<String, Object> invitationContest(@Param("invitation") Integer invitationId);
 }
