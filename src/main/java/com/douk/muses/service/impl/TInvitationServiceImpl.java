@@ -7,7 +7,6 @@ import com.douk.muses.pojo.or.UserInvitation;
 import com.douk.muses.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.douk.utils.md5.MD5Utils;
 import com.douk.utils.result.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -58,18 +57,36 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
         return userInvitationList;
     }
 
-    @Override
-    public Map<String, Object> getContent(Integer userId, Integer invitation) {
-        Map<String, Object> content = baseMapper.getContent(userId, invitation);
-        if (content == null) {
-            content = baseMapper.insertUserInvitation(userId, invitation);
-        }
-        return content;
-    }
+
+
 
     @Override
-    public Map<String, Object> insertUserInvitation(String i, Integer invitation) {
-        return baseMapper.insertUserInvitation(Integer.valueOf(i), invitation);
+    public Map<String, Object> invitationContest(Integer invitationId) {
+        Map<String, Object> map = baseMapper.invitationContest(invitationId);
+        Map<String, Object> maps=new HashMap<>();
+        maps.put("isAttention",0);
+        maps.put("isGood",0);
+        maps.put("isNoGood",0);
+        maps.put("isCollect",0);
+        maps.put("isBuy",0);
+        map.put("relation",maps);
+        return map;
+    }
+    @Override
+    public Map<String, Object> invitationContestById(Integer userId, Integer invitation) {
+        Map<String, Object> map = baseMapper.invitationContest(invitation);
+        Map<String, Object> maps=baseMapper.relation(userId,invitation);
+        if(null==maps){
+            maps=new HashMap<>();
+            maps.put("isAttention",0);
+            maps.put("isGood",0);
+            maps.put("isNoGood",0);
+            maps.put("isCollect",0);
+            maps.put("isBuy",0);
+        }
+        map.put("relation",maps);
+
+        return map;
     }
 
     @Override
@@ -87,6 +104,7 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
         return baseMapper.insert(invitation);
     }
 
+
     @Override
     public Result post(MultipartFile header) {
         File file = new File("");
@@ -95,7 +113,6 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
             //getOriginalFilename上传文件的文件名 有后缀
             String originalFilename = header.getOriginalFilename();
             String substring = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-
             UUID uuid = UUID.randomUUID();
             file = new File(basePath + uuid + "." + substring);
             try {
