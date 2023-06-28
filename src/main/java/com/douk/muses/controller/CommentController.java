@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 评论
+ */
 @RestController
 @RequestMapping("/comment")
-
 public class CommentController {
     @Autowired
     private TCommentService commentService;
@@ -27,7 +29,7 @@ public class CommentController {
      * @param map
      * @return
      */
-    @PostMapping("/comments")
+    @PostMapping("/list")
     public Result comment(HttpServletRequest request, @RequestBody Map<String,String> map){
         String iId=map.get("iId");
         String fnumber = map.get("fnumber");
@@ -56,7 +58,7 @@ public class CommentController {
      */
 
 
-    @PostMapping("/")
+    @PostMapping("/init")
     public Result inComment(HttpServletRequest request, @RequestBody TComment comment){
 
         String authorization = request.getHeader("Authorization");

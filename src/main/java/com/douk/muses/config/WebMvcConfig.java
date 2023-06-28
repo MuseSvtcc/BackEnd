@@ -20,6 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加自定义拦截器，并拦截对应 url"
         registry.addInterceptor(interceptor).addPathPatterns("/*/user/**").excludePathPatterns("/login");
+        registry.addInterceptor(interceptor).addPathPatterns("/**/verify/**").excludePathPatterns("/login");
     }
     /**
      * 开启跨域

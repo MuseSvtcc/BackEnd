@@ -20,9 +20,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p>
- * 登录 前端控制器
- * </p>
+ * 登录注册
  *
  * @author douk
  * @since 2023-06-01
@@ -139,7 +137,7 @@ public class LoginController {
      * @param email
      * @return
      */
-    @GetMapping("/email/loginCode/{email}")
+    @GetMapping("/email/login/{email}")
     public Result emailLoginCode(@PathVariable String email){
         TUser user=userService.getEmail(email);
         if(user!=null){
@@ -156,7 +154,7 @@ public class LoginController {
      * @param map
      * @return
      */
-    @PostMapping("/sign")
+    @PostMapping("/signin")
     public Result sign(@RequestBody Map<String,String> map){
         System.out.println(map);
         String email = map.get("email");
@@ -179,7 +177,7 @@ public class LoginController {
      * @param email
      * @return
      */
-    @GetMapping("/getcode/{email}")
+    @GetMapping("/signin/{email}")
     public Result getCode(@PathVariable String email){
         int i=userService.getEmailJudge(email);
         if(i==1){
