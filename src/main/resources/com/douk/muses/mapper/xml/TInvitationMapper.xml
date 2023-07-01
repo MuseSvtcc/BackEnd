@@ -14,7 +14,7 @@
         <result column="collect" property="collect" />
         <result column="transmit" property="transmit" />
         <result column="price" property="price" />
-        <result column="partitions" property="partitions" />
+        <result column="partitions_id" property="partitionsId" />
         <result column="u_top" property="uTop" />
         <result column="u_private" property="uPrivate" />
         <result column="tag" property="tag" />
@@ -27,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        invitation_id, u_id, title, content, attachment, good, no_good, collect, transmit, price, partitions, u_top, u_private, tag, created_at, updated_st, deleted, look
+        invitation_id, u_id, title, content, attachment, good, no_good, collect, transmit, price, partitions_id, u_top, u_private, tag, created_at, updated_st, deleted, look
     </sql>
 
     <select id="getUserInvitationList" resultType="com.douk.muses.pojo.or.UserInvitation">

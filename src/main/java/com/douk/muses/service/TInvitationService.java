@@ -43,4 +43,13 @@ public interface TInvitationService extends IService<TInvitation> {
     int insertByUid(Integer userId, Map<String, String> map);
 
     Result post(MultipartFile header);
+
+    /**
+     * 根据分区获得帖子
+     * @param categorieId
+     * @param page
+     * @param news
+     * @return
+     */
+    List<TInvitation> getPartitionList(Integer categorieId, Integer page, String news);
 }

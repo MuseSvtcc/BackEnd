@@ -7,13 +7,11 @@ import com.douk.muses.pojo.or.UserInvitation;
 import com.douk.muses.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.douk.utils.result.Result;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -88,5 +86,20 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
 
 
         return null;
+    }
+
+    @Override
+    public List<TInvitation> getPartitionList(Integer categorieId, Integer page, String news) {
+        LambdaQueryWrapper<TInvitation> wrapper=new LambdaQueryWrapper<>();
+        wrapper.eq(TInvitation::getPartitionsId,categorieId);
+        wrapper.last("Limit "+page);
+        if(news.equals("new")){
+            wrapper.orderByDesc(TInvitation::getCreatedAt);
+
+        }else if(news.equals("hot")){
+            wrapper.orderByDesc(TInvitation::getGood);
+        }
+
+        return baseMapper.selectList(wrapper);
     }
 }

@@ -70,7 +70,7 @@ public class TInvitation implements Serializable {
     /**
      * 分区
      */
-    private String partitions;
+    private Integer partitionsId;
 
     /**
      * 置顶
