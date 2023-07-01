@@ -38,4 +38,9 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
 
         return list;
     }
+
+    @Override
+    public int initComment(TComment comment) {
+        return baseMapper.insert(comment);
+    }
 }

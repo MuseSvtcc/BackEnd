@@ -6,7 +6,9 @@ import com.douk.muses.mapper.TInvitationMapper;
 import com.douk.muses.pojo.or.UserInvitation;
 import com.douk.muses.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.douk.utils.result.Result;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -79,5 +81,12 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
         invitation.setIOrM(map.get("iorm"));//图片或视频链接
 
         return baseMapper.insert(invitation);
+    }
+
+    @Override
+    public Result post(MultipartFile header) {
+
+
+        return null;
     }
 }

@@ -17,4 +17,6 @@ import java.util.List;
 public interface TCommentService extends IService<TComment> {
 
     List<InvitationComment> getCommentList(Integer userId, String iId, String number, String size, String znumber, String zsize);
+
+    int initComment(TComment comment);
 }

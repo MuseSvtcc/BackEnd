@@ -56,8 +56,6 @@ public class CommentController {
      * @param comment
      * @return
      */
-
-
     @PostMapping("/init")
     public Result inComment(HttpServletRequest request, @RequestBody TComment comment){
 
@@ -65,7 +63,7 @@ public class CommentController {
         Map<String, Object> maps = JWTUtils.checkToken(authorization);
         String uId = String.valueOf(maps.get("userId"));
         comment.setUId(Integer.valueOf(uId));
-        int i=commentService.inComment(comment);
+        int i=commentService.initComment(comment);
         return Result.ok();
     }
 
