@@ -18,5 +18,5 @@ public interface TCommentService extends IService<TComment> {
 
     List<InvitationComment> getCommentList(Integer userId, String iId, String number, String size, String znumber, String zsize);
 
-    int inComment(TComment comment);
+    int initComment(TComment comment);
 }

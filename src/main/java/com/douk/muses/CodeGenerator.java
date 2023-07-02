@@ -58,10 +58,10 @@
 //
 //        // 数据源配置
 //        DataSourceConfig dsc = new DataSourceConfig();
-//        dsc.setUrl("jdbc:mysql://localhost:3306/db_lg?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8");
+//        dsc.setUrl("jdbc:mysql://home.007666.xyz:3306/db_lg?serverTimezone=GMT%2B8&useSSL=true&characterEncoding=utf-8");
 //        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
 //        dsc.setUsername("root");
-//        dsc.setPassword("1234");
+//        dsc.setPassword("zengyuan");
 //        mpg.setDataSource(dsc);
 //
 //        // 包配置

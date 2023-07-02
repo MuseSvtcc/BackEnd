@@ -1,9 +1,12 @@
 package com.douk.muses.controller;
 
 import com.douk.muses.pojo.TAttention;
+import com.douk.muses.pojo.TInvitation;
+import com.douk.muses.pojo.TPartitions;
 import com.douk.muses.pojo.or.UserInvitation;
 import com.douk.muses.service.TAttentionService;
 import com.douk.muses.service.TInvitationService;
+import com.douk.muses.service.TPartitionsService;
 import com.douk.utils.JWT.JWTUtils;
 import com.douk.utils.result.Result;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +31,8 @@ public class PostController {
     private TAttentionService attentionService;
     @Autowired
     private TInvitationService invitationService;
+    @Autowired
+    private TPartitionsService partitionsService;
 
     /**
      * 首页推荐
@@ -97,6 +102,33 @@ public class PostController {
         return invitationService.post(header);
     }
 
+    /**
+     * 获得分区列表
+     * @return
+     */
+
+    @GetMapping("/categories")
+    public Result Categories(){
+//        invitationService.getPartitionsList();
+        List<TPartitions> partitionsList=partitionsService.getList();
+        return Result.ok(partitionsList);
+    }
+
+    /**
+     * 根据分区获得帖子
+     * @param categorieId
+     * @param page
+     * @param news
+     * @return
+     */
+    @GetMapping("/categorie/{categorieId}/{page}/{new}")
+    public Result Categorie(@PathVariable("categorieId") Integer categorieId,
+                            @PathVariable("page") Integer page,
+                            @PathVariable("new") String news) {
+        List<TInvitation> invitations=invitationService.getPartitionList(categorieId,page,news);
+
+        return Result.ok(invitations);
+    }
 
 
 }
