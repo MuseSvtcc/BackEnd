@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,10 +126,52 @@ public class PostController {
     public Result Categorie(@PathVariable("categorieId") Integer categorieId,
                             @PathVariable("page") Integer page,
                             @PathVariable("new") String news) {
-        List<TInvitation> invitations=invitationService.getPartitionList(categorieId,page,news);
+        List<Integer> invitations=invitationService.getPartitionList(categorieId,page,news);
 
         return Result.ok(invitations);
     }
+
+
+    /**
+     * 根据id获取帖子内容
+     * @param id
+     * @return
+     */
+    @GetMapping("/{postId}")
+    public Result getInvitation(@PathVariable("postId") Integer id){
+        TInvitation invitation=invitationService.getInvitation(id);
+        String content = invitation.getContent();
+        String textString = content.replaceAll("\\<.*?\\>", "");
+        invitation.setContent(textString);
+        return Result.ok(invitation);
+    }
+    /**
+     * 根据id获取帖子内容富文本
+     * @param id
+     * @param details
+     * @return
+     */
+    @GetMapping("/{postId}/{details}")
+    public Result getInvitation(@PathVariable("postId") Integer id,
+                                @PathVariable("details") String details){
+        TInvitation invitation=invitationService.getInvitation(id);
+        return Result.ok(invitation);
+    }
+    /**
+     * 根据id获取帖子内容列表
+     */
+    @GetMapping("/list/{ids}")
+    public Result getList(@PathVariable Integer[] ids){
+
+        List<TInvitation> list=invitationService.listByIds(Arrays.asList(ids));
+        for (TInvitation invitation : list) {
+            String content = invitation.getContent();
+            String textString = content.replaceAll("\\<.*?\\>", "");
+            invitation.setContent(textString);
+        }
+        return Result.ok(list);
+    }
+
 
 
 }

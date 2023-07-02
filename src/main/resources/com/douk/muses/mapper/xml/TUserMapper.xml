@@ -23,12 +23,12 @@
         <result column="phone" property="phone" />
         <result column="hobby" property="hobby" />
         <result column="attention_count" property="attentionCount" />
-
+        <result column="fans" property="fans" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        u_id, user_name, pass_word, nick_name, email, portrait, describe_text, sex, vip, history, gold_count, offline_time, favorite, created_at, updated_at, deleted, phone,hobby,attention_count
+        u_id, user_name, pass_word, nick_name, email, portrait, describe_text, sex, vip, history, gold_count, offline_time, favorite, created_at, updated_at, deleted, phone,hobby,attention_count,fans
     </sql>
     <update id="setAttentionCountAdd">
         update t_user

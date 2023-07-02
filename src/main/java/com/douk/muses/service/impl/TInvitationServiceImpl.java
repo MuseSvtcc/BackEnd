@@ -89,7 +89,8 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
     }
 
     @Override
-    public List<TInvitation> getPartitionList(Integer categorieId, Integer page, String news) {
+    public List<Integer> getPartitionList(Integer categorieId, Integer page, String news) {
+        List<Integer> integers=new ArrayList<>();
         LambdaQueryWrapper<TInvitation> wrapper=new LambdaQueryWrapper<>();
         wrapper.eq(TInvitation::getPartitionsId,categorieId);
         wrapper.last("Limit "+page);
@@ -99,7 +100,16 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
         }else if(news.equals("hot")){
             wrapper.orderByDesc(TInvitation::getGood);
         }
+        List<TInvitation> invitations = baseMapper.selectList(wrapper);
+        for (TInvitation invitation : invitations) {
+            integers.add(invitation.getInvitationId());
+        }
+        return integers;
+    }
 
-        return baseMapper.selectList(wrapper);
+    @Override
+    public TInvitation getInvitation(Integer id) {
+        TInvitation invitation = baseMapper.selectById(id);
+        return invitation;
     }
 }
