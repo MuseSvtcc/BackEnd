@@ -116,5 +116,7 @@ public class TUser implements Serializable {
      */
     private Integer attentionCount;
 
+    private Integer fans;
+
 
 }

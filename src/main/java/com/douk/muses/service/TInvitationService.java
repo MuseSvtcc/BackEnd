@@ -51,5 +51,7 @@ public interface TInvitationService extends IService<TInvitation> {
      * @param news
      * @return
      */
-    List<TInvitation> getPartitionList(Integer categorieId, Integer page, String news);
+    List<Integer> getPartitionList(Integer categorieId, Integer page, String news);
+
+    TInvitation getInvitation(Integer id);
 }
