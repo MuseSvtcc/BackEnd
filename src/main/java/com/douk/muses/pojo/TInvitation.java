@@ -94,7 +94,7 @@ public class TInvitation implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     private Date createdAt;
 
-    private Date updatedSt;
+    private Date updatedAt;
 
     @TableLogic
     private Integer deleted;

@@ -19,7 +19,7 @@
         <result column="u_private" property="uPrivate" />
         <result column="tag" property="tag" />
         <result column="created_at" property="createdAt" />
-        <result column="updated_st" property="updatedSt" />
+        <result column="updated_at" property="updatedAt" />
         <result column="deleted" property="deleted" />
         <result column="look" property="look" />
     </resultMap>
@@ -27,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        invitation_id, u_id, title, content, attachment, good, no_good, collect, transmit, price, partitions_id, u_top, u_private, tag, created_at, updated_st, deleted, look
+        invitation_id, u_id, title, content, attachment, good, no_good, collect, transmit, price, partitions_id, u_top, u_private, tag, created_at, updated_at, deleted, look
     </sql>
 
     <select id="getUserInvitationList" resultType="com.douk.muses.pojo.or.UserInvitation">
